@@ -3,7 +3,7 @@
 ## Overview 
 - This is a project to create a simple calculator using HTML, CSS  & Javascript.
 
-## Tools Needed 
+## Tools
 - HTML.
 - CSS.
 - Javascript.
