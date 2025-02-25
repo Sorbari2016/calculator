@@ -1,0 +1,29 @@
+/* General Styling of the calculator */
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+body {
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 16px;
+    text-align: center; /* Center align text */
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+
+#calcContainer {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    border: 2px solid white;
+    width: 300px;
+    height: 400px;
+    background-color: gray;
+    margin-top: 30px;
+}
