@@ -27,11 +27,34 @@ body {
     background-color: gray;
     margin-top: 30px;
     align-items: center;
+    gap: 20px;
 }
 
 #resultScreen {
     background-color: white;
     width: 250px;
-    height: 100px;
+    height: 80px;
     margin-top: 15px;
+}
+
+
+#calcButtons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 250px;
+    height: 260px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.roundBtn {
+width: 45px;
+height: 45px;
+background-color: #343a40;
+border: 1px solid #ddd;
+border-radius: 60px;
+cursor: pointer;
 }
