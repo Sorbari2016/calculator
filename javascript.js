@@ -1,11 +1,24 @@
 // Javascript code 
 
-// To Select the calContainer element 
-const container = document.getElementById("calcButtons"); 
+// Variable to store numbers or symbols on buttons
+const buttonValues = [
+  "Ac", "7", "4","1","0",
+  "+/-", "8", "5", "2",".",
+  "%", "9", "6", "3", "C",
+  "/", "*", "-",  "+","="
+];
 
-// To create the 4 * 5 divs for the circular buttons
-for (let i = 0; i < 5 * 4; i++) { 
+// To select the calButtons element
+const container = document.getElementById("calcButtons");
+
+// To create the buttons with text in them
+for (let i = 0; i < buttonValues.length ; i++) { 
   const roundBtn = document.createElement("button");
-  roundBtn.classList.add("roundBtn"); 
-  container.appendChild(roundBtn);
+  roundBtn.classList.add("roundBtn"); // Add class
+  roundBtn.textContent = buttonValues[i]; // Set button text
+  container.appendChild(roundBtn); // Attach button to container
 }
+
+
+
+
