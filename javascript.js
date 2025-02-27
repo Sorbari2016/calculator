@@ -20,5 +20,25 @@ for (let i = 0; i < buttonValues.length ; i++) {
 }
 
 
+// Functions to run basic math operations
+// To simply add items
+function add (operand1, operand2, ...operandn) {
+  return operand1 + operand2 + operandn.reduce((acc, num) => acc + num, 0);
+}
+
+// To simply subtract items
+function subtract(operand1, operand2, ...operandn) {
+  return operand1 - operand2 - operandn.reduce((acc, num) => acc + num, 0);
+}
+
+// To simply multiply items
+function multiply(operand1, operand2, ...operandn) {
+  return operand1 * operand2 * operandn.reduce((acc, num) => acc * num, 1);
+}
+
+// To simply divide items
+function divide(operand1, operand2, ...operandn) {
+  return operandn.reduce((acc, num) => acc / num, operand1 / operand2);
+}
 
 
