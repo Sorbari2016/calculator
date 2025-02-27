@@ -45,3 +45,42 @@ function divide(operand1, operand2, ...operandn) {
 let operand1 = null;  // First number
 let operator = null;  // Operator (+, -, *, /)
 let operand2 = null; // Second number
+
+
+// DISPLAY
+// Select the result screen
+const display = document.getElementById("resultScreen");
+
+// Select all buttons inside the calculator
+const buttons = document.querySelectorAll(".roundBtn");
+
+// Initialize display with "0"
+display.textContent = "0";
+
+// Regular expression to check for operators
+const operators = /[+\-*/]/;
+
+// Add click event listener to each button
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const value = button.textContent; // Get button text
+
+    if (value === "Ac") {
+      display.textContent = "0"; // Clear everything
+    } else if (value === "C") {
+      display.textContent = display.textContent.trim().length > 1
+        ? display.textContent.slice(0, -1).trim()
+        : "0";
+    } else if (value === "=") {
+      display.textContent = operate(display.textContent); // Calculate result
+    } else {
+      if (operators.test(value)) {
+        // Add spaces before and after the operator
+        display.textContent += ` ${value} `;
+      } else {
+        // Append value to the display, replace "0" if it's the first input
+        display.textContent = display.textContent === "0" ? value : display.textContent + value;
+      }
+    }
+  });
+});
