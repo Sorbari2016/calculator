@@ -41,4 +41,7 @@ function divide(operand1, operand2, ...operandn) {
   return operandn.reduce((acc, num) => acc / num, operand1 / operand2);
 }
 
-
+// Variables that will store numbers(operands), & operators
+let operand1 = null;  // First number
+let operator = null;  // Operator (+, -, *, /)
+let operand2 = null; // Second number
