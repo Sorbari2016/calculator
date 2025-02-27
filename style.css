@@ -62,7 +62,7 @@ font-weight: bold;
 color: white;
 }
 
-/* Styling for operator buttons */
+/* Specific styling for operator buttons */
 .roundBtn:nth-child(16),
 .roundBtn:nth-child(17),
 .roundBtn:nth-child(18),
@@ -70,4 +70,9 @@ color: white;
 .roundBtn:nth-child(20){ 
     background-color: #8789f1; /* Orange for operators */
     color: white;
+}
+
+/* Hover effect */
+.roundBtn:hover {
+    background-color: #d5c7c7;
 }
