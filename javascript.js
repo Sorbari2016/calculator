@@ -1,5 +1,6 @@
 // Javascript code 
 
+// BUTTONS
 // Variable to store numbers or symbols on buttons
 const buttonValues = [
   "Ac", "7", "4","1","0",
@@ -18,33 +19,6 @@ for (let i = 0; i < buttonValues.length ; i++) {
   roundBtn.textContent = buttonValues[i]; // Set button text
   container.appendChild(roundBtn); // Attach button to container
 }
-
-
-// Functions to run basic math operations
-// To simply add items
-function add (operand1, operand2, ...operandn) {
-  return operand1 + operand2 + operandn.reduce((acc, num) => acc + num, 0);
-}
-
-// To simply subtract items
-function subtract(operand1, operand2, ...operandn) {
-  return operand1 - operand2 - operandn.reduce((acc, num) => acc + num, 0);
-}
-
-// To simply multiply items
-function multiply(operand1, operand2, ...operandn) {
-  return operand1 * operand2 * operandn.reduce((acc, num) => acc * num, 1);
-}
-
-// To simply divide items
-function divide(operand1, operand2, ...operandn) {
-  return operandn.reduce((acc, num) => acc / num, operand1 / operand2);
-}
-
-// Variables that will store numbers(operands), & operators
-let operand1 = null;  // First number
-let operator = null;  // Operator (+, -, *, /)
-let operand2 = null; // Second number
 
 
 // DISPLAY
@@ -84,3 +58,72 @@ buttons.forEach(button => {
     }
   });
 });
+
+
+// MATHEMATICAL OPERATIONS 
+// Functions to run basic math operations
+// To simply add items
+function add (operand1, operand2, ...operandn) {
+  return operand1 + operand2 + operandn.reduce((acc, num) => acc + num, 0);
+}
+
+// To simply subtract items
+function subtract(operand1, operand2, ...operandn) {
+  return operand1 - operand2 - operandn.reduce((acc, num) => acc + num, 0);
+}
+
+// To simply multiply items
+function multiply(operand1, operand2, ...operandn) {
+  return operand1 * operand2 * operandn.reduce((acc, num) => acc * num, 1);
+}
+
+// To simply divide items
+function divide(operand1, operand2, ...operandn) {
+  return operandn.reduce((acc, num) => acc / num, operand1 / operand2);
+}
+
+// Operate function that will call the basic maths functions
+function operate(expression) {
+  // Split input into an array of numbers and operators
+  let tokens = expression.split(" ").filter(token => token.trim() !== "");
+
+  // Convert numbers to actual numbers
+  let numbers = [];
+  let operations = [];
+
+  tokens.forEach(token => {
+    if (operators.test(token)) {
+      operations.push(token); // Store operators separately
+    } else {
+      numbers.push(parseFloat(token)); // Convert numbers to float
+    }
+  });
+
+  // Perform calculations from left to right
+  let result = numbers[0];
+
+  for (let i = 0; i < operations.length; i++) {
+    let nextNum = numbers[i + 1];
+    let op = operations[i];
+
+    switch (op) {
+      case "+":
+        result = add(result, nextNum);
+        break;
+      case "-":
+        result = subtract(result, nextNum);
+        break;
+      case "*":
+        result = multiply(result, nextNum);
+        break;
+      case "/":
+        if (nextNum === 0) {
+          return "Error"; // Handle division by zero
+        }
+        result = divide(result, nextNum);
+        break;
+    }
+  }
+
+  return result;
+}
