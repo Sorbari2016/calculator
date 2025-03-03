@@ -22,14 +22,15 @@ for (let i = 0; i < buttonValues.length ; i++) {
 
 
 // DISPLAY
-// Select the result screen
 const display = document.getElementById("resultScreen");
-
-// Select all buttons inside the calculator
 const buttons = document.querySelectorAll(".roundBtn");
 
-// Initialize display with "0"
+// Initialize display and variables
 display.textContent = "0";
+let firstOperand = null;
+let secondOperand = null;
+let currentOperator = null;
+let shouldResetDisplay = false;
 
 // Regular expression to check for operators
 const operators = /[+\-*/]/;
@@ -37,93 +38,86 @@ const operators = /[+\-*/]/;
 // Add click event listener to each button
 buttons.forEach(button => {
   button.addEventListener("click", () => {
-    const value = button.textContent; // Get button text
+    const value = button.textContent;
 
     if (value === "Ac") {
-      display.textContent = "0"; // Clear everything
+      resetCalculator();
     } else if (value === "C") {
-      display.textContent = display.textContent.trim().length > 1
-        ? display.textContent.slice(0, -1).trim()
-        : "0";
+      display.textContent = display.textContent.length > 1 ? display.textContent.slice(0, -1) : "0";
     } else if (value === "=") {
-      display.textContent = operate(display.textContent); // Calculate result
-    } else {
-      if (operators.test(value)) {
-        // Add spaces before and after the operator
-        display.textContent += ` ${value} `;
-      } else {
-        // Append value to the display, replace "0" if it's the first input
-        display.textContent = display.textContent === "0" ? value : display.textContent + value;
+      if (firstOperand !== null && currentOperator !== null) {
+        secondOperand = parseFloat(display.textContent.split(" ").pop()); // Get last number
+        display.textContent = operate(firstOperand, secondOperand, currentOperator);
+        firstOperand = parseFloat(display.textContent);
+        currentOperator = null;
       }
+    } else if (operators.test(value)) {
+      handleOperator(value);
+    } else {
+      handleNumber(value);
     }
   });
 });
 
-
-// MATHEMATICAL OPERATIONS 
-// Functions to run basic math operations
-// To simply add items
-function add (operand1, operand2, ...operandn) {
-  return operand1 + operand2 + operandn.reduce((acc, num) => acc + num, 0);
-}
-
-// To simply subtract items
-function subtract(operand1, operand2, ...operandn) {
-  return operand1 - operand2 - operandn.reduce((acc, num) => acc + num, 0);
-}
-
-// To simply multiply items
-function multiply(operand1, operand2, ...operandn) {
-  return operand1 * operand2 * operandn.reduce((acc, num) => acc * num, 1);
-}
-
-// To simply divide items
-function divide(operand1, operand2, ...operandn) {
-  return operandn.reduce((acc, num) => acc / num, operand1 / operand2);
-}
-
-// Operate function that will call the basic maths functions
-function operate(expression) {
-  // Split input into an array of numbers and operators
-  let tokens = expression.split(" ").filter(token => token.trim() !== "");
-
-  // Convert numbers to actual numbers
-  let numbers = [];
-  let operations = [];
-
-  tokens.forEach(token => {
-    if (operators.test(token)) {
-      operations.push(token); // Store operators separately
-    } else {
-      numbers.push(parseFloat(token)); // Convert numbers to float
-    }
-  });
-
-  // Perform calculations from left to right
-  let result = numbers[0];
-
-  for (let i = 0; i < operations.length; i++) {
-    let nextNum = numbers[i + 1];
-    let op = operations[i];
-
-    switch (op) {
-      case "+":
-        result = add(result, nextNum);
-        break;
-      case "-":
-        result = subtract(result, nextNum);
-        break;
-      case "*":
-        result = multiply(result, nextNum);
-        break;
-      case "/":
-        if (nextNum === 0) {
-          return "Error"; // Handle division by zero
-        }
-        result = divide(result, nextNum);
-        break;
-    }
+// Handle Number Input (Keeps full expression)
+function handleNumber(value) {
+  if (shouldResetDisplay) {
+    shouldResetDisplay = false; // Prevent display reset
   }
 
-  return result;
+  display.textContent = display.textContent === "0" ? value : display.textContent + value;
 }
+
+// Handle Operator Input (Always Displays Operators)
+function handleOperator(operator) {
+  if (firstOperand === null) {
+    firstOperand = parseFloat(display.textContent);
+  } else if (currentOperator !== null) {
+    secondOperand = parseFloat(display.textContent.split(" ").pop());
+    firstOperand = operate(firstOperand, secondOperand, currentOperator);
+    display.textContent = firstOperand; // Show result
+  }
+
+  // Always display the full expression
+  display.textContent += " " + operator + " ";
+  currentOperator = operator;
+  shouldResetDisplay = false; // Do not reset display now
+}
+
+// Mathematical Operations (Your Functions)
+function add(operand1, operand2) {
+  return operand1 + operand2;
+}
+
+function subtract(operand1, operand2) {
+  return operand1 - operand2;
+}
+
+function multiply(operand1, operand2) {
+  return operand1 * operand2;
+}
+
+function divide(operand1, operand2) {
+  return operand2 === 0 ? "Error" : operand1 / operand2;
+}
+
+// Operate Function
+function operate(a, b, operator) {
+  switch (operator) {
+    case "+": return add(a, b);
+    case "-": return subtract(a, b);
+    case "*": return multiply(a, b);
+    case "/": return divide(a, b);
+    default: return b;
+  }
+}
+
+// Reset Calculator
+function resetCalculator() {
+  display.textContent = "0";
+  firstOperand = null;
+  secondOperand = null;
+  currentOperator = null;
+  shouldResetDisplay = false;
+}
+
