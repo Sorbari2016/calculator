@@ -103,14 +103,20 @@ function divide(operand1, operand2) {
 
 // Operate Function
 function operate(a, b, operator) {
+  let result;
+  
   switch (operator) {
-    case "+": return add(a, b);
-    case "-": return subtract(a, b);
-    case "*": return multiply(a, b);
-    case "/": return divide(a, b);
+    case "+": result = add(a, b); break;
+    case "-": result = subtract(a, b); break;
+    case "*": result = multiply(a, b); break;
+    case "/": result = (b === 0 ? "Error" : divide(a, b)); break;
     default: return b;
   }
+
+  // Round long decimals to 6 places (if it's a number)
+  return typeof result === "number" ? parseFloat(result.toFixed(8)) : result;
 }
+
 
 // Reset Calculator
 function resetCalculator() {
