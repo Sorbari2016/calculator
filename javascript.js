@@ -69,22 +69,37 @@ function handleNumber(value) {
 }
 
 // Handle Operator Input (Always Displays Operators)
+
 function handleOperator(operator) {
+  let text = display.textContent.trim();
+  
+  // Check if the last character is an operator
+  if (operators.test(text[text.length - 1])) {
+    display.textContent = text.slice(0, -1) + " " + operator + " ";
+    currentOperator = operator; // Update to new operator
+    return;
+  }
+
   if (firstOperand === null) {
     firstOperand = parseFloat(display.textContent);
   } else if (currentOperator !== null) {
     secondOperand = parseFloat(display.textContent.split(" ").pop());
-    firstOperand = operate(firstOperand, secondOperand, currentOperator);
-    display.textContent = firstOperand; // Show result
+
+    // Ensure secondOperand is a valid number before evaluation
+    if (!isNaN(secondOperand)) {
+      firstOperand = operate(firstOperand, secondOperand, currentOperator);
+      display.textContent = firstOperand; // Update display with result
+    }
   }
 
-  // Always display the full expression
   display.textContent += " " + operator + " ";
   currentOperator = operator;
-  shouldResetDisplay = false; // Do not reset display now
+  shouldResetDisplay = true;
 }
 
-// Mathematical Operations (Your Functions)
+
+
+// Mathematical Operations
 function add(operand1, operand2) {
   return operand1 + operand2;
 }
