@@ -66,6 +66,10 @@ function handleNumber(value) {
     display.textContent = value;
     firstOperand = null; // Reset first operand so a new calculation starts
   } else {
+    // Prevent multiple decimal points in the current number
+    const lastNumber = display.textContent.split(/[\s+\-*/]+/).pop(); // Get the last entered number
+    if (value === "." && lastNumber.includes(".")) return; // If "." exists, ignore input
+
     display.textContent = display.textContent === "0" ? value : display.textContent + value;
   }
 }
