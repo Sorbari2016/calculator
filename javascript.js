@@ -44,6 +44,8 @@ buttons.forEach(button => {
       resetCalculator();
     } else if (value === "C") {
       display.textContent = display.textContent.length > 1 ? display.textContent.slice(0, -1) : "0";
+    }  else if (value === "+/-") {
+        toggleSign();
     } else if (value === "=") {
       if (firstOperand !== null && currentOperator !== null) {
         secondOperand = parseFloat(display.textContent.split(" ").pop()); // Get last number
@@ -58,6 +60,23 @@ buttons.forEach(button => {
     }
   });
 });
+
+
+// Function to enable the +/- work properly
+function toggleSign() {
+  let text = display.textContent.trim();
+  
+  // Split by spaces to get the last entered number
+  let parts = text.split(" ");
+  let lastNumber = parts.pop(); // Get the last number
+
+  if (!isNaN(lastNumber) && lastNumber !== "") {
+    lastNumber = parseFloat(lastNumber) * -1; // Toggle sign
+    parts.push(lastNumber); // Replace with updated number
+    display.textContent = parts.join(" "); // Reconstruct display
+  }
+}
+
 
 // Handle Number Input (Keeps full expression)
 function handleNumber(value) {
