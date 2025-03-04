@@ -61,12 +61,15 @@ buttons.forEach(button => {
 
 // Handle Number Input (Keeps full expression)
 function handleNumber(value) {
-  if (shouldResetDisplay) {
-    shouldResetDisplay = false; // Prevent display reset
+  // If a result was just displayed, clear it and start fresh
+  if (currentOperator === null && firstOperand !== null) {
+    display.textContent = value;
+    firstOperand = null; // Reset first operand so a new calculation starts
+  } else {
+    display.textContent = display.textContent === "0" ? value : display.textContent + value;
   }
-
-  display.textContent = display.textContent === "0" ? value : display.textContent + value;
 }
+
 
 // Handle Operator Input (Always Displays Operators)
 
