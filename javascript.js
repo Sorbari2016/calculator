@@ -168,3 +168,25 @@ function resetCalculator() {
   shouldResetDisplay = false;
 }
 
+
+// **Keyboard Support**
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+
+  if (!isNaN(key) || key === ".") {
+    handleNumber(key);
+  } else if (["+", "-", "*", "/"].includes(key)) {
+    handleOperator(key);
+  } else if (key === "Enter") {
+    handleInput("="); // Simulate "=" button click
+  } else if (key === "Backspace") {
+    handleInput("C"); // Simulate "C" button click
+  } else if (key.toLowerCase() === "a" || key === "Escape") {
+    resetCalculator(); // Simulate "Ac" button click
+  } else if (key === "%") {
+    handleOperator("%");
+  } else if (key === "+/-") {
+    toggleSign();
+  }
+});
+
