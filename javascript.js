@@ -1,7 +1,7 @@
 // Javascript code 
 
 // BUTTONS
-// Variable to store numbers or symbols on buttons
+// Array to store numbers or symbols on buttons
 const buttonValues = [
   "Ac", "7", "4","1","0",
   "+/-", "8", "5", "2",".",
